@@ -1,1 +1,12 @@
-dsa
+<!DOCTYPE html>
+
+<html lang="pt">
+    <head>
+        <meta name="viewport" content="initial-scale=1, width=device-width">
+        <title>Seja bem vindo ao novo</title>
+    </head>
+    <body>
+        <image src="logo_CSC_small.png" class="center" alt="logotipo do CSC" widht="400px" height="400px">
+        <h1> Site em construção . . . </h1>
+    </body>
+</html>
