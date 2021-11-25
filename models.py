@@ -12,7 +12,7 @@ class Contratos(db.Model):
     valor = db.Column(db.Integer))
     mes = db.Column(db.Integer))
 
-    def __init__(self, name=None, email=None):
+    def __init__(self, contrato=None, fornecedor=None, objeto=None, valor=None, mes=None):
         self.contrato = contrato
         self.fornecedor = fornecedor
         self.objeto = objeto
