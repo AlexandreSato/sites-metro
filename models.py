@@ -1,7 +1,7 @@
 from app import db
 
 
-class Contratos(db.Contratos):
+class Contratos(db.contratos):
     """Simple database model to track event attendees."""
 
     __tablename__ = 'contratos'
