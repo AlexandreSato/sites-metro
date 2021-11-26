@@ -52,8 +52,6 @@ class Data(Base):
 
 @app.route("/")
 def index():
-    from models import Contratos
-    contratos = Contratos.query.all()
     return render_template("index.html")
 
 @app.route("/api")
