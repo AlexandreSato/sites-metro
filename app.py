@@ -28,5 +28,5 @@ migrate = Migrate(app, db)
 @app.route("/")
 def index():
     from models import Contratos
-    contratos = Contratos.query.all()
+    contratos = db.session.query(Contratos)
     return render_template("index.html", contratos=contratos)
