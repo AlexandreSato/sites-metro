@@ -26,7 +26,6 @@ app.config.update(
 
 # initialize the database connection
 db = SQLAlchemy(app)
-data = []
 
 Base = declarative_base()
 
@@ -57,5 +56,10 @@ def index():
 @app.route("/api")
 def api():
     todos_contratos = db.session.query(Data)
-    print(todos_contratos)
     return jsonify(json_list = [i.serialize for i in todos_contratos.all()])
+
+@app.route("/tabela", methods=["GET", "POST"])
+def tabela():
+    toodos_contratos = db.session.query(Data)
+    toodos_contratos = [i.serialize for i in toodos_contratos.all()]
+    return render_template("tabela.html", contratos=toodos_contratos)
