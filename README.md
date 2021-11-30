@@ -8,8 +8,7 @@ languages:
 - html
 products:
 - azure
-- azure-app-service
-- azure-postgresql-server
+- azure-app/postgresql-service
 - api-rest for Power-Bi
 ---
 
