@@ -2,9 +2,11 @@
 
 import os
 
-from flask import Flask, jsonify, render_template, url_for, request
+from flask import Flask, jsonify, render_template, url_for, request, redirect
+from werkzeug.utils import redirect
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+# from helpers import apology
 
 
 database_uri = 'postgresql+psycopg2://{dbuser}:{dbpass}@{dbhost}/{dbname}'.format(
@@ -25,6 +27,7 @@ db = SQLAlchemy(app)
 
 # initialize database migration management
 migrate = Migrate(app, db)
+from models import Contratos # common for db interactions
 
 @app.route("/")
 def index():
@@ -32,12 +35,27 @@ def index():
 
 @app.route("/api")
 def api():
-    from models import Contratos
     contratos = Contratos.query.all()
     return jsonify(json_list = [i.serialize for i in contratos])
 
-@app.route("/tabela", methods=["GET", "POST"])
+@app.route("/tabela")
 def tabela():
-    from models import Contratos
     contratos = Contratos.query.all()
     return render_template("tabela.html", contratos=contratos)
+
+@app.route("/lancar", methods=["GET", "POST"])
+def lancar():
+    if request.method == "POST":
+        id = None
+        contrato = request.form.get("contrato")
+        fornecedor = request.form.get("fornecedor")
+        objeto = request.form.get("objeto")
+        valor = request.form.get("valor")
+        mes = request.form.get("mes")
+
+        lancamento = Contratos(id, contrato, fornecedor, objeto, valor, mes)
+        db.session.add(lancamento)
+        db.session.commit()
+        return redirect("/tabela")
+    else:
+        return render_template("lancar.html")

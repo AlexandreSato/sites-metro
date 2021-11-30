@@ -37,6 +37,7 @@
                         <!-- <li class="nav-item"><a class="nav-link" href="/register">Register</a></li> -->
                         <li class="nav-item"><a class="nav-link" href="/api">Obter API JSON</a></li>
                         <li class="nav-item"><a class="nav-link" href="/tabela">Ver Dados em Formato de Tabela</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/lancar">Lançar Dados</a></li>
                         <!-- <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li> -->
                     </ul>
                 <!-- {% endif %} -->
@@ -44,6 +45,14 @@
         </nav>
 
         <image src="{{url_for('static', filename='logo_CSC_small.png')}}" class="center" alt="logotipo do CSC" widht="150px" height="150px">
+        
+        {% if get_flashed_messages() %}
+            <header>
+                <div class="alert alert-primary border text-center" role="alert">
+                    {{ get_flashed_messages() | join(" ") }}
+                </div>
+            </header>
+        {% endif %}     
         
         <main class="container p-5">
             {% block main %}{% endblock %}
