@@ -1,11 +1,15 @@
 ---
 page_type: sample
-description: "A minimal sample app that can be used to demonstrate deploying Flask apps to Azure App Service on Linux."
+description: "Aplicativo para validar lançamento de rateio de custos e exportar para o Power Bi"
 languages:
 - python
+- sql
+- bootstrap
+- html
 products:
 - azure
-- azure-app-service
+- azure-app/postgresql-service
+- api-rest for Power-Bi
 ---
 
 # Python Flask sample for Azure App Service (Linux)
@@ -13,6 +17,8 @@ products:
 This is a minimal Flask app that can be deployed to Azure App Service on Linux.
 
 For instructions on running and deploying the code, see [Quickstart: Create a Python app in Azure App Service on Linux](https://docs.microsoft.com/azure/app-service/quickstart-python).
+
+Protótipo para lançamento de rateio de custos para a Companhia do Metropolitano de São Paulo - METRÔ
 
 ## Contributing
 
