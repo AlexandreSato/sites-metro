@@ -10,6 +10,7 @@ products:
 - azure
 - azure-app-service
 - azure-postgresql-server
+- api-rest for Power-Bi
 ---
 
 # Python Flask sample for Azure App Service (Linux)
