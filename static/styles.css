@@ -22,6 +22,15 @@ nav .navbar-brand .green
     color: #2e944b;
 }
 
+body
+{
+    background-image: url("/static/logo_CSC_small.png");
+    background-repeat: no-repeat;
+    background-blend-mode: darken;
+    background-size: 400px 200px;
+    background-position: left center;
+}
+
 main .form-control
 {
     /* center form controls */
