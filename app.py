@@ -1,13 +1,12 @@
 # Alexandre Nobuharu Sato em 30 de novembro de 2021, Ribeirão Pires - SP
-
 import os
 
-from flask import Flask, jsonify, render_template, url_for, request, redirect
+from flask import Flask, jsonify, render_template, request, redirect, session
+from flask_session import Session
 from werkzeug.utils import redirect
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-# from helpers import apology
-
+from tempfile import mkdtemp
 
 database_uri = 'postgresql+psycopg2://{dbuser}:{dbpass}@{dbhost}/{dbname}'.format(
     dbuser=os.environ['DBUSER'],
@@ -19,15 +18,39 @@ database_uri = 'postgresql+psycopg2://{dbuser}:{dbpass}@{dbhost}/{dbname}'.forma
 app = Flask(__name__)
 app.config.update(
     SQLALCHEMY_DATABASE_URI=database_uri,
-    SQLALCHEMY_TRACK_MODIFICATIONS=False,
+    SQLALCHEMY_TRACK_MODIFICATIONS = False,
+    TEMPLATES_AUTO_RELOAD = True,
+
+    # Configure session to use filesystem (instead of signed cookies)
+    SESSION_FILE_DIR = mkdtemp(),
+    SESSION_PERMANENT = False,
+    SESSION_TYPE = "filesystem"
 )
+Session(app)
+
+# Ensure responses aren't cached
+@app.after_request
+def after_request(response):
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response.headers["Expires"] = 0
+    response.headers["Pragma"] = "no-cache"
+    return response
 
 # initialize the database connection
 db = SQLAlchemy(app)
 
 # initialize database migration management
 migrate = Migrate(app, db)
-from models import Contratos # common for db interactions
+from models import Contratos, Usuarios # common for db interactions
+
+
+@app.route("/login")
+def login():
+    usuarios = Usuarios.query.all()
+    row = usuarios[0]
+    print(row)
+    return render_template("usuarios.html", usuarios=usuarios)
+
 
 @app.route("/")
 def index():

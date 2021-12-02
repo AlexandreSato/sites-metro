@@ -29,3 +29,18 @@ class Contratos(db.Model):
             "valor":self.valor,
             "mes":self.mes
         }
+
+# Controle de acesso
+class Usuarios(db.Model):
+
+    __tablename__ = 'usuarios'
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String())
+    email = db.Column(db.String())
+    senha = db.Column(db.Integer())
+
+    def __init__(self, id=None, nome=None, email=None, senha=None):
+        self.id = id
+        self.nome = nome
+        self.email = email
+        self.senha = senha
