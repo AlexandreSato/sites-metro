@@ -47,14 +47,27 @@ from models import Contratos, Usuarios # common for db interactions
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    """Log User in"""
+
+    # Forget any user_id
+    session.clear()
+
+    # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
-        # TODO
-        if not (request.form.get("nome") and request.form.get("email") and request.form.get("senha")):
-            flash ("Miss someting")
+        if not (request.form.get("email") and request.form.get("senha")):
+            flash ("Ops vc esqueceu de preencher algum campo")
             return render_template("login.html")
-        usuario = request.form.get("nome")
-        usuario = Usuarios.query.filter_by(nome=usuario)
-        return render_template("usuarios.html", usuarios=usuario)
+            
+        email = request.form.get("email")
+        senha = request.form.get("senha")
+        user = Usuarios.query.filter_by(email=email).first()
+        if user and (user.senha.strip() == senha.strip()):
+            flash (f"Bem vindo de volta {user.nome}")
+            return render_template("index.html")
+        else:
+            flash ("email ou senha incorretos")
+            return render_template("login.html")
+
     else:
         return render_template("login.html")
 

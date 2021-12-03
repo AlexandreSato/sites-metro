@@ -7,13 +7,10 @@
 {% block main %}
     <form action="/login" method="post">
         <div class="form-group">
-            <input autocomplete="off" autofocus class="form-control" name="nome" placeholder="nome de usuário" type="text" >
+            <input autocomplete="off" class="form-control" name="email" placeholder="luke@metrosp.com.br" type="text" required>
         </div>
         <div class="form-group">
-            <input autocomplete="off" class="form-control" name="email" placeholder="seuemail@metrosp.com.br" type="text" >
-        </div>
-        <div class="form-group">
-            <input autocomplete="off" class="form-control" name="senha" placeholder="password" type="text">
+            <input autocomplete="off" class="form-control" name="senha" placeholder="senha: skywalker" type="text" required>
         </div>
         <button class="btn btn-primary" type="submit">Logar</button>
     </form>

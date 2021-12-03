@@ -22,7 +22,7 @@ INSERT INTO contratos (contrato, fornecedor, objeto, valor, mes) VALUES (1001333
 CREATE TABLE usuarios (
     id          SERIAL     NOT NULL,
     nome        CHAR(50),
-    email      CHAR(50),
+    email      CHAR(50)     UNIQUE,
     senha       CHAR(255),
     PRIMARY KEY (id)
 );
