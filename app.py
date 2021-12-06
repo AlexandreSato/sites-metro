@@ -1,4 +1,4 @@
-# Alexandre Nobuharu Sato em 30 de novembro de 2021, Ribeirão Pires - SP
+# Alexandre Nobuharu Sato em 06 de dezembro de 2021, Ribeirão Pires - SP
 import os
 
 from flask import Flask, jsonify, render_template, request, redirect, session, flash
@@ -7,6 +7,7 @@ from werkzeug.utils import redirect
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from tempfile import mkdtemp
+from helpers import brl, row2dict
 
 database_uri = 'postgresql+psycopg2://{dbuser}:{dbpass}@{dbhost}/{dbname}'.format(
     dbuser=os.environ['DBUSER'],
@@ -36,6 +37,9 @@ def after_request(response):
     response.headers["Expires"] = 0
     response.headers["Pragma"] = "no-cache"
     return response
+
+# Custom filter
+app.jinja_env.filters["brl"] = brl
 
 # initialize the database connection
 db = SQLAlchemy(app)
@@ -84,7 +88,10 @@ def api():
 @app.route("/tabela")
 def tabela():
     contratos = Contratos.query.all()
-    return render_template("tabela.html", contratos=contratos)
+    CONTRATOS = [row2dict(contrato) for contrato in contratos]
+    for contrato in CONTRATOS:
+        contrato["valor"] = brl(float(contrato["valor"]))
+    return render_template("tabela.html", contratos=CONTRATOS)
 
 @app.route("/lancar", methods=["GET", "POST"])
 def lancar():
