@@ -7,7 +7,7 @@ from werkzeug.utils import redirect
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from tempfile import mkdtemp
-from helpers import brl, row2dict, apology
+from helpers import brl, row2dict, apology, login_required
 
 database_uri = 'postgresql+psycopg2://{dbuser}:{dbpass}@{dbhost}/{dbname}'.format(
     dbuser=os.environ['DBUSER'],
@@ -60,13 +60,12 @@ def login():
     if request.method == "POST":
         if not (request.form.get("email") and request.form.get("senha")):
             return apology("faltou preencher algum campo", 400)
-            # flash ("Ops vc esqueceu de preencher algum campo")
-            # return render_template("login.html")
             
         email = request.form.get("email")
         senha = request.form.get("senha")
         user = Usuarios.query.filter_by(email=email).first()
         if user and (user.senha.strip() == senha.strip()):
+            session["user_id"] = user.id
             flash (f"Bem vindo de volta {user.nome}")
             return render_template("index.html")
         else:
@@ -77,6 +76,7 @@ def login():
         return render_template("login.html")
 
 @app.route("/")
+@login_required
 def index():
     flash("Site em construção")
     return render_template("index.html")
@@ -87,6 +87,7 @@ def api():
     return jsonify(json_list = [i.serialize for i in contratos])
 
 @app.route("/tabela")
+@login_required
 def tabela():
     contratos = Contratos.query.all()
     CONTRATOS = [row2dict(contrato) for contrato in contratos]
@@ -95,6 +96,7 @@ def tabela():
     return render_template("tabela.html", contratos=CONTRATOS)
 
 @app.route("/lancar", methods=["GET", "POST"])
+@login_required
 def lancar():
     if request.method == "POST":
         id = None
