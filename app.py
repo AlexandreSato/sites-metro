@@ -47,7 +47,7 @@ db = SQLAlchemy(app)
 
 # initialize database migration management
 migrate = Migrate(app, db)
-from models import Contratos, Usuarios # common for db interactions
+from models import Contratos, ListaCNs, Usuarios # common for db interactions
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -125,6 +125,16 @@ def lancar():
         return redirect("/tabela")
     else:
         return render_template("lancar.html")
+
+
+@app.route("/lista_cns")
+@login_required
+def lista_cns():
+    contratos = ListaCNs.query.all()
+    CONTRATOS = [row2dict(contrato) for contrato in contratos]
+    # for contrato in CONTRATOS:
+    #     contrato["valor"] = brl(float(contrato["valor"]))
+    return render_template("lista_cns.html", contratos=CONTRATOS)
 
 
 def errorhandler(e):

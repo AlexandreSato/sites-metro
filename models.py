@@ -31,6 +31,7 @@ class Contratos(db.Model):
     #         "mes":self.mes
     #     }
 
+
 # Controle de acesso
 class Usuarios(db.Model):
 
@@ -45,3 +46,29 @@ class Usuarios(db.Model):
         self.nome = nome
         self.email = email
         self.senha = senha
+
+
+# Lista de contratos
+class ListaCNs(db.Model):
+
+    __tablename__ = 'lista_cns'
+    id = db.Column(db.Integer, primary_key=True)
+    cn = db.Column(db.Integer())
+    empresa = db.Column(db.String())
+    objeto = db.Column(db.String())
+    data_termino = db.Column(db.String())
+    analista = db.Column(db.String())
+    substituto = db.Column(db.String())
+    coordenadoria = db.Column(db.String())
+    alias = db.Column(db.String())
+
+    def __init__(self, id=None, cn=None, empresa=None, objeto=None, data_termino=None, analista=None, substituto=None, coordenadoria=None, alias=None):
+        self.id = id
+        self.cn = cn
+        self.empresa = empresa
+        self.objeto = objeto
+        self.data_termino = data_termino
+        self.analista = analista
+        self.substituto = substituto
+        self.coordenadoria = coordenadoria
+        self.alias = alias

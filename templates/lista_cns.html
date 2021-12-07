@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Valida Contratos
+{% endblock %}
+
+{% block main %}
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <th>id</th>
+                <th>Contrato</th>
+                <th>Fornecedor</th>
+                <th>Objeto</th>
+                <th>Data Término</th>
+                <th>Analista</th>
+                <th>Substituto</th>
+                <th>Coordenadoria</th>
+                <th>Alias</th>
+            </thead>
+    
+            <tbody>
+    
+                {% for contrato in contratos %}
+                <tr>
+                    <td>{{ contrato.id }}</td>
+                    <td>{{ contrato.cn }}</td>
+                    <td>{{ contrato.empresa }}</td>
+                    <td>{{ contrato.objeto }}</td>
+                    <td>{{ contrato.data_termino }}</td>
+                    <td>{{ contrato.analista }}</td>
+                    <td>{{ contrato.substituto }}</td>
+                    <td>{{ contrato.coordenadoria }}</td>
+                    <td>{{ contrato.alias }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

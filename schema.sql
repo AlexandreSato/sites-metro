@@ -31,3 +31,34 @@ CREATE TABLE usuarios (
 INSERT INTO usuarios (nome, email, senha) VALUES ('foo', 'foo@bar.com', 'bar');
 INSERT INTO usuarios (nome, email, senha) VALUES ('pepa', 'pepa@pig.com', 'pig');
 INSERT INTO usuarios (nome, email, senha) VALUES ('luke', 'luke@skywalker.com', 'skywalker');
+
+
+-- Creating a lista_cns table
+CREATE TABLE lista_cns (
+    id              SERIAL      NOT NULL,
+    cn              BIGINT         UNIQUE,
+    empresa         CHAR(100),
+    objeto          CHAR(500),
+    data_termino    CHAR(50),
+    analista        CHAR(255),
+    substituto      CHAR(255),
+    coordenadoria   CHAR(50),
+    alias           CHAR(50),
+    PRIMARY KEY (id)
+);
+
+COPY mytable FROM '/path/to/csv/file' WITH CSV HEADER; -- must be superuser
+COPY lista_cns FROM '/mnt/e/filho/Prototipos_Metro/sites/lista_cns.csv' WITH CSV HEADER;
+
+-- charge from csv 
+\copy mytable [ ( column_list ) ] FROM '/path/to/csv/file' WITH CSV HEADER
+\copy lista_cns  ( cn, empresa, objeto, data_termino, analista, substituto, coordenadoria, alias )  FROM '/mnt/e/filho/Prototipos_Metro/sites/lista_cns.csv' WITH delimiter ';' CSV HEADER encoding 'windows-1251';
+
+-- fix utf8 encoding error
+command$: file lista_cns.csv
+output: lista_cns.csv: ISO-8859 text, with very long lines, with CRLF, LF line terminators
+
+-- converting ISO-8859 > utf-8
+iconv -c -t utf-8 lista_cns.csv > lista_cns.utf8.csv
+\copy lista_cns  ( cn, empresa, objeto, data_termino, analista, substituto, coordenadoria, alias )  FROM '/mnt/e/filho/Prototipos_Metro/sites/lista_cns.utf8.csv' WITH delimiter ';' CSV HEADER;
+
