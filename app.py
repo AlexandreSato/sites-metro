@@ -7,7 +7,7 @@ from werkzeug.utils import redirect
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from tempfile import mkdtemp
-from helpers import brl, row2dict
+from helpers import brl, row2dict, apology
 
 database_uri = 'postgresql+psycopg2://{dbuser}:{dbpass}@{dbhost}/{dbname}'.format(
     dbuser=os.environ['DBUSER'],
@@ -59,8 +59,9 @@ def login():
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
         if not (request.form.get("email") and request.form.get("senha")):
-            flash ("Ops vc esqueceu de preencher algum campo")
-            return render_template("login.html")
+            return apology("faltou preencher algum campo", 400)
+            # flash ("Ops vc esqueceu de preencher algum campo")
+            # return render_template("login.html")
             
         email = request.form.get("email")
         senha = request.form.get("senha")
