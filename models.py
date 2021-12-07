@@ -19,16 +19,17 @@ class Contratos(db.Model):
         self.valor = valor
         self.mes = mes
 
-    @property
-    def serialize(self):
-        return {
-            "id":self.id,
-            "contrato":self.contrato,
-            "fornecedor":self.fornecedor,
-            "objeto":self.objeto,
-            "valor":self.valor,
-            "mes":self.mes
-        }
+    """Serializador ensinado por Thais Akemi Fatec Paula Souza"""
+    # @property
+    # def serialize(self):
+    #     return {
+    #         "id":self.id,
+    #         "contrato":self.contrato,
+    #         "fornecedor":self.fornecedor,
+    #         "objeto":self.objeto,
+    #         "valor":self.valor,
+    #         "mes":self.mes
+    #     }
 
 # Controle de acesso
 class Usuarios(db.Model):

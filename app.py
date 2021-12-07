@@ -8,6 +8,7 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from tempfile import mkdtemp
 from helpers import brl, row2dict, apology, login_required
+from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 
 database_uri = 'postgresql+psycopg2://{dbuser}:{dbpass}@{dbhost}/{dbname}'.format(
     dbuser=os.environ['DBUSER'],
@@ -75,16 +76,27 @@ def login():
     else:
         return render_template("login.html")
 
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/")
+
+
 @app.route("/")
 @login_required
 def index():
     flash("Site em construção")
     return render_template("index.html")
 
+
 @app.route("/api")
 def api():
     contratos = Contratos.query.all()
-    return jsonify(json_list = [i.serialize for i in contratos])
+    CONTRATOS = [row2dict(contrato) for contrato in contratos]
+    return jsonify(CONTRATOS)
+    # return jsonify(json_list = [i.serialize for i in contratos])
+
 
 @app.route("/tabela")
 @login_required
@@ -94,6 +106,7 @@ def tabela():
     for contrato in CONTRATOS:
         contrato["valor"] = brl(float(contrato["valor"]))
     return render_template("tabela.html", contratos=CONTRATOS)
+
 
 @app.route("/lancar", methods=["GET", "POST"])
 @login_required
@@ -112,3 +125,15 @@ def lancar():
         return redirect("/tabela")
     else:
         return render_template("lancar.html")
+
+
+def errorhandler(e):
+    """Handle error"""
+    if not isinstance(e, HTTPException):
+        e = InternalServerError()
+    return apology(e.name, e.code)
+
+
+# Listen for errors
+for code in default_exceptions:
+    app.errorhandler(code)(errorhandler)
