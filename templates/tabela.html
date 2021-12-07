@@ -5,29 +5,31 @@
 {% endblock %}
 
 {% block main %}
-  <table class="table table-striped">
-        <thead>
-            <th>id</th>
-            <th>Fornecedor</th>
-            <th>Contrato</th>
-            <th>Objeto</th>
-            <th>Mês Ref.</th>
-            <th>Valor.</th>
-        </thead>
-
-        <tbody>
-
-            {% for contrato in contratos %}
-            <tr>
-                <td>{{ contrato.id }}</td>
-                <td>{{ contrato.fornecedor }}</td>
-                <td>{{ contrato.contrato }}</td>
-                <td>{{ contrato.objeto }}</td>
-                <td>{{ contrato.mes }}</td>
-                <td>{{ contrato.valor }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <th>id</th>
+                <th>Fornecedor</th>
+                <th>Contrato</th>
+                <th>Objeto</th>
+                <th>Mês Ref.</th>
+                <th>Valor.</th>
+            </thead>
+    
+            <tbody>
+    
+                {% for contrato in contratos %}
+                <tr>
+                    <td>{{ contrato.id }}</td>
+                    <td>{{ contrato.fornecedor }}</td>
+                    <td>{{ contrato.contrato }}</td>
+                    <td>{{ contrato.objeto }}</td>
+                    <td>{{ contrato.mes }}</td>
+                    <td>{{ contrato.valor }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 {% endblock %}

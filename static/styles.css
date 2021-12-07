@@ -24,11 +24,11 @@ nav .navbar-brand .green
 
 body
 {
-    background-image: url("/static/logo_CSC_small.png");
+    /* background-image: url("/static/logo_CSC_small.png");
     background-repeat: no-repeat;
     background-blend-mode: darken;
     background-size: 200px 100px;
-    background-position: left center;
+    background-position: left center; */
 }
 
 main .form-control
